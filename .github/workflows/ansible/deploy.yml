@@ -1,0 +1,26 @@
+- name: Get front build
+  ansible.builtin.get_url:
+    url: "{{ download_url }}"
+    dest: /tmp/front.zip
+
+- name: Ensure tmp directory exists
+  ansible.builtin.file:
+    path: /tmp/front
+    state: directory
+
+- name: Unzip front build
+  ansible.builtin.unarchive:
+    src: /tmp/front.zip
+    dest: "/tmp/front"
+    remote_src: yes
+
+- name: Remove old front build
+  ansible.builtin.file:
+    path: "{{ app_path }}"
+    state: absent
+
+- name: Move front build
+  ansible.builtin.copy:
+    src: "/tmp/front/"
+    dest: "{{ app_path }}"
+    remote_src: yes
