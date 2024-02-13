@@ -106,9 +106,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           inventory: |
             [frontend]
-            $HOST ansible_user=${{ secrets.SSH_USER }}
+            ${{ vars.HOST }} ansible_user=${{ secrets.SSH_USER }}
           options: |
             --extra-vars download_url=https://github.com/tech-personnal-repos/val-frontend/releases/download/${{ steps.package.outputs.version }}/front.zip
-            --extra-vars backend_host=$BACKEND_HOST
-            --extra-vars app_path=$APP_PATH
-            --extra-vars host=$HOST
+            --extra-vars backend_host=${{ vars.BACKEND_HOST }}
+            --extra-vars app_path=${{ vars.APP_PATH }}
+            --extra-vars host=${{ vars.HOST }}
